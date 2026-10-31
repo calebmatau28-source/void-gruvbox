@@ -1,65 +1,66 @@
 # Void Gruvbox
 
-A personal Void Linux desktop configuration built around **Mango Window Manager**, **Waybar**, and **Rofi**, with a muted Gruvbox-inspired palette and a slightly retro, beveled visual style.
+A personal Void Linux desktop configuration built around **Mango Window Manager**, **Waybar**, and **Rofi**, with a dark Gruvbox-inspired palette and a slightly retro, beveled visual style.
 
-> This repository is being organized from a working desktop setup. Configuration snapshots will be added after review so the published files are portable and do not contain machine-specific paths or private information.
-
-## Desktop
+## Desktop stack
 
 | Component | Role |
 |---|---|
 | [Void Linux](https://voidlinux.org/) | Operating system |
-| [MangoWM](https://github.com/DreamMaoMao/mangowm) | Wayland compositor / window manager |
+| [MangoWM](https://github.com/mangowm/mango) | Wayland compositor / window manager |
 | [Waybar](https://github.com/Alexays/Waybar) | Status bar |
 | [Rofi](https://github.com/davatorium/rofi) | Application launcher and wallpaper menu |
 | [Kitty](https://github.com/kovidgoyal/kitty) | Terminal |
-| Fish | Interactive shell |
-| Starship | Shell prompt |
-| Matugen | Wallpaper-derived color generation |
+| Fish + Starship | Shell and prompt |
+| Matugen | Theme template generation and reload hooks |
 | SwayNC | Notification center |
 | PipeWire / WirePlumber | Audio |
 | swaybg | Wallpaper display |
 | CAVA | Terminal audio visualizer |
 
-Spotify is used as an optional MPRIS media source.
+Spotify is an optional MPRIS media source.
 
 ## Design
 
-- Gruvbox-inspired dark colors, with muted green and warm yellow/orange accents.
-- Compact Waybar with workspace controls, media information, system utilities, connectivity, audio, brightness, battery, notifications, power, and clock modules.
-- Rofi application launcher styled to match the desktop.
-- Wallpaper selection intended to update the desktop palette through Matugen.
-- Keyboard-driven Mango workspace and window management.
+- Dark Gruvbox-inspired colors with muted green, warm yellow, and orange accents.
+- Compact Waybar with launcher and four custom workspace indicators on the left, media information in the center, and system controls on the right.
+- Rofi application launcher and two-column wallpaper picker styled to match the desktop.
+- Raised/beveled Waybar modules and a recessed media display for a slightly retro desktop feel.
+- Wallpaper picker with thumbnail caching, recursive image discovery, and Matugen reload hooks.
 
 ## Repository layout
 
-The repository will contain reviewed, portable configuration snapshots and documentation. Machine-specific paths, caches, generated thumbnails, downloaded wallpaper collections, and secrets do not belong here.
+- `dotfiles/` — reviewed configuration files and helper scripts, arranged by their destination under `$HOME`.
+- `docs/requirements.md` — software and font requirements.
+- `docs/keybindings.md` — MangoWM keyboard and mouse bindings.
+- `docs/installation.md` — installation, validation, and rollback instructions.
+- `install.sh` — backup-first installer with dry-run and rollback modes.
 
-Planned areas:
+## Install
 
-- `mango/` — MangoWM configuration
-- `waybar/` — Waybar JSONC and CSS
-- `rofi/` — Rofi launcher and theme files
-- `matugen/` — Matugen templates
-- `fish/` — Fish shell configuration
-- `cava/` — CAVA configuration
-- `scripts/` — desktop helper scripts
-- `docs/` — setup notes and keybindings
+```sh
+git clone https://github.com/calebmatau28-source/void-gruvbox.git
+cd void-gruvbox
+bash install.sh --dry-run
+bash install.sh --apply
+```
 
-## Setup
+The installer asks before writing, backs up every replaced file to `${XDG_STATE_HOME:-$HOME/.local/state}/void-gruvbox/backups/`, and installs helper scripts with executable permissions. To undo the most recent install:
 
-This project targets Void Linux and the Wayland session described above. It is not yet an installable dotfiles bundle: configuration files and a safe installation/backup procedure will be added after the current setup has been reviewed and sanitized.
+```sh
+bash install.sh --rollback
+```
 
-See [Requirements](docs/requirements.md) and [Keybindings](docs/keybindings.md).
+It does not install packages, enable services, or restart your session. Read [the full installation guide](docs/installation.md) before applying it.
+
+## Portability notes
+
+The original machine-specific absolute home paths have been removed. Hardware and optional integrations still vary: backlight selection, monitor topology, Spotify, btop, pavucontrol, and elogind should be checked on the target system. The included Matugen templates currently preserve a fixed Gruvbox palette rather than dynamically sampling every color from the selected wallpaper.
 
 ## Wallpapers and third-party assets
 
-Wallpaper collections are not bundled. Some external artwork used during setup has its own license and attribution requirements; keep those notices with any assets you redistribute.
-
-## Contributing
-
-This is primarily a personal desktop configuration. Suggestions and issue reports are welcome, especially for portability, documentation, and compatibility.
+Wallpaper collections are not bundled. External artwork retains its own license and attribution requirements; include those notices with any artwork you redistribute.
 
 ## License
 
-A repository license has not been selected yet. Until one is added, do not assume these configuration files are licensed for redistribution.
+No repository license has been selected yet. Until one is added, do not assume these configuration files are licensed for redistribution.
