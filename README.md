@@ -30,7 +30,7 @@ Spotify is an optional MPRIS media source.
 
 ## Repository layout
 
-- `dotfiles/` — reviewed configuration files and helper scripts, arranged by their destination under `$HOME`.
+- `dotfiles.tar.gz` — reviewed configuration files and helper scripts, arranged by their destination under `$HOME`; the installer safely extracts this bundle into a temporary directory.
 - `docs/requirements.md` — software and font requirements.
 - `docs/keybindings.md` — MangoWM keyboard and mouse bindings.
 - `docs/installation.md` — installation, validation, and rollback instructions.
@@ -55,7 +55,7 @@ It does not install packages, enable services, or restart your session. Read [th
 
 ## Portability notes
 
-The original machine-specific absolute home paths have been removed. Hardware and optional integrations still vary: backlight selection, monitor topology, Spotify, btop, pavucontrol, and elogind should be checked on the target system. The included Matugen templates currently preserve a fixed Gruvbox palette rather than dynamically sampling every color from the selected wallpaper.
+The original machine-specific `/home/hollow` paths have been removed. Hardware and optional integrations still vary: backlight selection, monitor topology, Spotify, btop, pavucontrol, and elogind should be checked on the target system. The included Matugen templates currently preserve a fixed Gruvbox palette rather than dynamically sampling every color from the selected wallpaper.
 
 ## Wallpapers and third-party assets
 
