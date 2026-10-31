@@ -2,6 +2,8 @@
 set -Eeuo pipefail
 
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_ROOT="$ROOT/dotfiles"
+TEMP_SOURCE_DIR=""
 MODE="${1:---dry-run}"
 STATE_ROOT="${XDG_STATE_HOME:-$HOME/.local/state}/void-gruvbox"
 BACKUPS_ROOT="$STATE_ROOT/backups"
@@ -40,6 +42,7 @@ Usage:
   bash install.sh --apply         Back up existing files, then install
   bash install.sh --rollback      Restore files from the last install backup
 
+Config files are read from dotfiles/ or extracted from dotfiles.tar.gz.
 The installer does not install packages, enable services, or restart your session.
 USAGE
 }
@@ -127,9 +130,30 @@ case "$MODE" in
     ;;
 esac
 
+# Read the directory tree directly when present; otherwise extract the
+# repository's archive into a private temp directory. Reject traversal paths.
+if [[ ! -d "$SOURCE_ROOT" && -f "$ROOT/dotfiles.tar.gz" ]]; then
+  command -v tar >/dev/null 2>&1 || {
+    printf 'tar is required to extract dotfiles.tar.gz\n' >&2
+    exit 1
+  }
+  TEMP_SOURCE_DIR="$(mktemp -d "${TMPDIR:-/tmp}/void-gruvbox.XXXXXXXX")"
+  trap '[[ -z "$TEMP_SOURCE_DIR" ]] || rm -rf -- "$TEMP_SOURCE_DIR"' EXIT
+  while IFS= read -r archive_path; do
+    case "$archive_path" in
+      /*|../*|*/../*|*/..|..)
+        printf 'Unsafe path in dotfiles archive: %s\n' "$archive_path" >&2
+        exit 1
+        ;;
+    esac
+  done < <(tar -tzf "$ROOT/dotfiles.tar.gz")
+  tar -xzf "$ROOT/dotfiles.tar.gz" --no-same-owner -C "$TEMP_SOURCE_DIR"
+  SOURCE_ROOT="$TEMP_SOURCE_DIR/dotfiles"
+fi
+
 # Validate every source before showing or applying any changes.
 for rel in "${FILES[@]}"; do
-  if ! safe_relpath "$rel" || [[ ! -f "$ROOT/dotfiles/$rel" ]]; then
+  if ! safe_relpath "$rel" || [[ ! -f "$SOURCE_ROOT/$rel" || -L "$SOURCE_ROOT/$rel" ]]; then
     printf 'Missing or unsafe source file: %s\n' "$rel" >&2
     exit 1
   fi
@@ -163,7 +187,7 @@ mkdir -p -- "$backup_dir" "$STATE_ROOT"
 printf '%s\n' "$backup_dir" > "$MANIFEST"
 
 for rel in "${FILES[@]}"; do
-  source_file="$ROOT/dotfiles/$rel"
+  source_file="$SOURCE_ROOT/$rel"
   destination="$HOME/$rel"
   mkdir -p -- "$(dirname -- "$destination")"
 
