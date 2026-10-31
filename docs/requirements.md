@@ -4,43 +4,41 @@
 
 - Void Linux
 - A working Wayland session
-- MangoWM (the setup was reported on version 0.18.4)
+- MangoWM (the source configuration was collected from MangoWM 0.18.4)
 
-## Desktop applications and services
+## Desktop components
 
 | Component | Purpose |
 |---|---|
-| Waybar | Status bar (setup reported on version 0.15) |
-| Rofi | Application launcher and wallpaper picker (setup reported on version 2.0.0) |
+| Waybar | Status bar (source setup used 0.15) |
+| Rofi | Application launcher and wallpaper picker (source setup used 2.0.0) |
 | Kitty | Terminal emulator |
-| Fish | Shell |
-| Starship | Prompt |
-| Matugen | Generate theme colors from a wallpaper |
-| SwayNC | Notifications |
-| PipeWire and WirePlumber | Audio routing |
-| playerctl / playerctld | MPRIS media controls |
+| Fish | Interactive shell |
+| Starship | Shell prompt |
+| Matugen | Theme template generation and application reload hooks |
+| SwayNC | Notification center |
+| PipeWire / WirePlumber | Audio routing |
+| playerctl / playerctld | MPRIS media status |
 | swaybg | Wallpaper display |
-| CAVA | Audio visualizer |
-| ImageMagick | Wallpaper thumbnail generation |
-| brightnessctl | Backlight controls |
+| CAVA | Terminal audio visualizer |
+| ImageMagick (`magick`) | Wallpaper thumbnails |
+| brightnessctl | Hardware brightness control |
+| Python 3 | Mango workspace status helper |
+| Mango IPC utility (`mmsg`) | Workspace state and click actions |
+| elogind (`loginctl`) | Power menu actions |
 
-A Nerd Font is recommended for icon glyphs in Waybar and Rofi. The exact font family should be documented after checking the current system configuration.
+## Fonts
+
+- JetBrainsMono Nerd Font (the configured terminal, bar, and launcher font family)
 
 ## Optional integrations
 
-- Spotify, installed separately, for the Waybar MPRIS module.
-- Bluetooth applet and NetworkManager applet, if enabled in the session.
-- btop, launched from the Waybar system-monitor module.
-- A wallpaper collection stored outside this repository.
+- Spotify for the configured Waybar MPRIS module.
+- `btop` for the Waybar system-monitor launcher.
+- `pavucontrol` for the Waybar audio click action.
+- `eza`, `lazygit`, and `fd` for Fish abbreviations and FZF file search.
+- A wallpaper collection in `~/Pictures/Wallpapers` (not bundled in this repository).
 
-## Portability
+## Notes
 
-Before installing the dotfiles on another machine:
-
-1. Install the required applications using the package manager appropriate to that system.
-2. Review the configuration files and adjust hardware-specific settings.
-3. Back up existing configuration directories.
-4. Apply the files selectively; do not blindly overwrite an existing desktop setup.
-5. Start the Wayland session and verify each component.
-
-The final install instructions will be completed after the configuration files and scripts have been reviewed.
+The configuration was collected from one laptop. Backlight hardware, installed font family, monitor layout, session services, and optional applications vary by machine. See [installation.md](installation.md) for the install and validation procedure.
