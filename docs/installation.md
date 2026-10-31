@@ -21,7 +21,7 @@ cd void-gruvbox
 bash install.sh --dry-run
 ```
 
-The dry run is the default if you run `bash install.sh` with no arguments. It prints the destinations that would be created or replaced and changes nothing.
+The dry run is the default if you run `bash install.sh` with no arguments. It prints the destinations that would be created or replaced and changes nothing. The installer reads the configuration files from `dotfiles/` when present, or safely extracts `dotfiles.tar.gz` into a temporary directory when using the GitHub repository bundle.
 
 ## 4. Install with backups
 
@@ -35,7 +35,7 @@ The installer asks before writing. Existing files are copied to:
 ${XDG_STATE_HOME:-$HOME/.local/state}/void-gruvbox/backups/<timestamp>/
 ```
 
-Scripts installed under `~/.local/bin/` receive executable permissions. The helper scripts use your home directory at runtime; the config files no longer contain machine-specific absolute paths.
+Scripts installed under `~/.local/bin/` receive executable permissions. The helper scripts use your home directory at runtime; the config files no longer contain the original machine-specific absolute home paths.
 
 ## 5. Validate before restarting
 
@@ -55,6 +55,12 @@ Check the wallpaper picker syntax:
 
 ```sh
 bash -n ~/.local/bin/wallpaper-picker
+```
+
+Check the Fish configuration syntax:
+
+```fish
+fish -n ~/.config/fish/config.fish
 ```
 
 If any validation command reports an error, do not restart Mango yet. Fix the reported issue first.
