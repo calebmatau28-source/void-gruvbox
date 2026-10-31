@@ -1,0 +1,32 @@
+# User/session state
+.cache/
+.local/state/
+.local/share/
+
+# Generated wallpaper thumbnails and picker state
+wallpaper-picker/
+thumbnails/
+current
+
+# Desktop runtime files
+*.pid
+*.sock
+
+# Editor and OS noise
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Local environment and secrets
+.env
+.env.*
+*.token
+*.pem
+*.key
+
+# Backups
+*.bak
+*.backup
+*.old
