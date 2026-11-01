@@ -2,6 +2,16 @@
 
 A personal Void Linux desktop configuration built around **Mango Window Manager**, **Waybar**, and **Rofi**, with a dark Gruvbox-inspired palette and a slightly retro, beveled visual style.
 
+## Screenshots
+
+![Desktop](screenshots/desktop.png)
+
+![Waybar](screenshots/waybar.png)
+
+![Rofi launcher](screenshots/rofi.png)
+
+![Wallpaper picker](screenshots/wallpaper-picker.png)
+
 ## Desktop stack
 
 | Component | Role |
